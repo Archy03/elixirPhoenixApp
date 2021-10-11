@@ -1,12 +1,12 @@
-<h1>Listing Posts</h1>
+<h3>Listing Posts</h3>
 
 <table>
   <thead>
     <tr>
       <th>Title</th>
       <th>Body</th>
-
-      <th></th>
+      <th>Comments</th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +14,7 @@
     <tr>
       <td><%= post.title %></td>
       <td><%= post.body %></td>
-
+      <td><%= get_comments_count(post.id) %></td>
       <td>
         <span><%= link "Show", to: Routes.post_path(@conn, :show, post) %></span>
         <span><%= link "Edit", to: Routes.post_path(@conn, :edit, post) %></span>

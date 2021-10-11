@@ -4,19 +4,25 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Buru · Phoenix Framework</title>
+    <title>Phoenix CRUD</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
+  <div class="navbar-fixed">
   <nav class="deep-orange">
     <div class="nav-wrapper container">
-      <a href="/" class="brand-logo">
+      <a href="/" class="brand-logo center">
         Phoenix CRUD
       </a>
+      <ul class="left hide-on-med-and-down">
+        <li><a href="/posts">Posts</a></li>
+        <li><a href="/comments">Comments</a></li>
+      </ul>
     </div>
   </nav>
+  </div>
    <!-- <header>
       <section class="container">
         <nav role="navigation">

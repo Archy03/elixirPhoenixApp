@@ -20,6 +20,7 @@ defmodule BuruWeb.Router do
     resources "/posts", PostController do
       post  "/comment", PostController, :add_comment
       end
+      resources "/comments", CommentController
   end
 
   # Other scopes may use custom stacks.

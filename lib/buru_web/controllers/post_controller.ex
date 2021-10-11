@@ -83,4 +83,5 @@ defmodule BuruWeb.PostController do
         |> redirect(to: Routes.post_path(conn, :show, post))
     end
   end
+
 end

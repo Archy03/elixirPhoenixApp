@@ -203,4 +203,10 @@ defmodule Buru.News do
     |> Map.put("post_id", post_id)
     |> News.create_comment()
   end
+
+  @spec get_number_of_comments(any) :: non_neg_integer
+  def get_number_of_comments(post_id) do
+    post = News.get_post!(post_id) |> Repo.preload([:comments])
+    Enum.count(post.comments)
+  end
 end

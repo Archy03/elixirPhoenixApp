@@ -1,4 +1,4 @@
-<h1>Show Post</h1>
+<h3>Show Post</h3>
 
 <ul>
 
@@ -16,3 +16,5 @@
 
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
 <span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+<%= render "comment_form.html", post: @post, changeset: @changeset, action: Routes.post_post_path(@conn, :add_comment, @post) %>
+<%= render "comments.html", comments: @post.comments %>
