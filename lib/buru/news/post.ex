@@ -7,13 +7,14 @@ defmodule Buru.News.Post do
     field :body, :string
     field :title, :string
     has_many  :comments, Comment
+    field :category_id, :id
     timestamps()
   end
 
   @doc false
   def changeset(post, attrs) do
     post
-    |> cast(attrs, [:title, :body])
-    |> validate_required([:title, :body])
+    |> cast(attrs, [:title, :body, :category_id])
+    |> validate_required([:title, :body, :category_id])
   end
 end

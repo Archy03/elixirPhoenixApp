@@ -12,6 +12,11 @@
     <%= @post.body %>
   </li>
 
+    <li>
+    <strong>Category:</strong>
+    <%= @post.category_id %>
+  </li>
+
 </ul>
 
 <span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>

@@ -4,6 +4,7 @@ defmodule BuruWeb.PostController do
   alias Buru.News
   alias Buru.News.Post
   alias Buru.News.Comment
+  alias Buru.News.Category
   alias Buru.Repo
 
   def index(conn, _params) do
@@ -13,7 +14,8 @@ defmodule BuruWeb.PostController do
 
   def new(conn, _params) do
     changeset = News.change_post(%Post{})
-    render(conn, "new.html", changeset: changeset)
+    categories = Repo.all(Category) |> Enum.map(&{&1.title, &1.id})
+    render(conn, "new.html", changeset: changeset, categories: categories)
   end
 
   def create(conn, %{"post" => post_params}) do
