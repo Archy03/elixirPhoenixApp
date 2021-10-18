@@ -15,8 +15,7 @@
   <%= error_tag f, :body %>
 
   <%= label f, :category_id  %>
-  <%= select f, :category_id, @categories %>
-
+  <%= select f, :category_id, @categories, style: "display: block;"  %>
 
   <div>
     <%= submit "Save" %>

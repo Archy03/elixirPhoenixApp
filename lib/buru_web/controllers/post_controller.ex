@@ -26,7 +26,8 @@ defmodule BuruWeb.PostController do
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        categories = Repo.all(Category) |> Enum.map(&{&1.title, &1.id})
+        render(conn, "new.html", changeset: changeset, categories: categories)
     end
   end
 
@@ -56,7 +57,8 @@ defmodule BuruWeb.PostController do
         |> redirect(to: Routes.post_path(conn, :show, post))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", post: post, changeset: changeset)
+        categories = Repo.all(Category) |> Enum.map(&{&1.title, &1.id})
+        render(conn, "edit.html", changeset: changeset, categories: categories)
     end
   end
 
