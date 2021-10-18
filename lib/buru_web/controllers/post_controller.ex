@@ -2,13 +2,15 @@ defmodule BuruWeb.PostController do
   use BuruWeb, :controller
 
   alias Buru.News
-  alias Buru.News.Post
-  alias Buru.News.Comment
-  alias Buru.News.Category
+  alias Buru.News.{Post, Comment, Category}
   alias Buru.Repo
 
   def index(conn, _params) do
-    posts = News.list_posts()
+    posts =
+      News.list_posts()
+      |> Repo.preload([:category])
+      |> IO.inspect()
+
     render(conn, "index.html", posts: posts)
   end
 
@@ -33,18 +35,20 @@ defmodule BuruWeb.PostController do
 
   def show(conn, %{"id" => id}) do
     post =
-        id
-        |> News.get_post!
-        |> Repo.preload([:comments])
+      id
+      |> News.get_post!()
+      |> Repo.preload([:comments])
 
     changeset = Comment.changeset(%Comment{}, %{})
-    render(conn, "show.html", post: post, changeset: changeset)
+    category = Repo.get(Category, post.category_id)
+    render(conn, "show.html", post: post, changeset: changeset, category: category)
   end
 
   def edit(conn, %{"id" => id}) do
     post = News.get_post!(id)
     changeset = News.change_post(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+    categories = Repo.all(Category) |> Enum.map(&{&1.title, &1.id})
+    render(conn, "edit.html", post: post, changeset: changeset, categories: categories)
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
@@ -76,16 +80,17 @@ defmodule BuruWeb.PostController do
       post_id
       |> News.get_post!()
       |> Repo.preload([:comments])
+
     case News.add_comment(post_id, comment_params) do
       {:ok, _comment} ->
         conn
         |> put_flash(:info, "Added comment!")
         |> redirect(to: Routes.post_path(conn, :show, post))
+
       {:error, _error} ->
         conn
         |> put_flash(:error, "Oops! Couldn't add comment!")
         |> redirect(to: Routes.post_path(conn, :show, post))
     end
   end
-
 end
